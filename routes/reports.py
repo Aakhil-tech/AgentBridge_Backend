@@ -32,7 +32,7 @@ async def get_report(api_key: str):
         "total_actions": total,
         "success_rate": round(len(success) / total * 100),
         "average_latency_ms": avg_latency,
-        "incidents_count": len(flagged),
+        "incidents": len(flagged),
         "compliance_score": score,
         "actions_breakdown": actions_breakdown,
         "incident_list": flagged,

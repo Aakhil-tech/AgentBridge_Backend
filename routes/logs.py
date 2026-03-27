@@ -42,4 +42,14 @@ async def get_logs(api_key: str, limit: int = 50):
         .limit(limit)\
         .execute()
 
-    return result.data
+    return [
+        {
+            "created_at": str(log.get("created_at", "")),
+            "action": str(log.get("action", "")),
+            "inputs": str(log.get("inputs", "")),
+            "latency_ms": int(log.get("latency_ms") or 0),
+            "flagged": bool(log.get("flagged")),
+            "status": str(log.get("status", ""))
+        }
+        for log in result.data
+    ]
