@@ -5,6 +5,10 @@ import datetime
 
 router = APIRouter()
 
+@router.get("/log")
+async def log_diagnostic():
+    return {"message": "Please use POST to send logs to this endpoint. This endpoint exists and is ready!"}
+
 @router.post("/log")
 @router.post("/log/")
 async def receive_log(data: dict):
@@ -28,7 +32,11 @@ async def receive_log(data: dict):
         "domain": data.get("domain", "fintech")
     }
 
-    supabase.table("logs").insert(entry).execute()
+    try:
+        supabase.table("logs").insert(entry).execute()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
     return {"ok": True, "flagged": flagged, "flag_reason": reason}
 
 @router.get("/logs")
