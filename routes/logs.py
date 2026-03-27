@@ -6,6 +6,7 @@ import datetime
 router = APIRouter()
 
 @router.post("/log")
+@router.post("/log/")
 async def receive_log(data: dict):
     if not data.get("api_key"):
         raise HTTPException(status_code=400, detail="api_key required")

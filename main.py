@@ -28,3 +28,7 @@ app.include_router(reports_router)
 def root():
     return {"status": "AgentBridge API is running"}
 
+@app.post("/test-api-post")
+def test_post(data: dict):
+    return {"message": "POST successful", "received": data}
+
